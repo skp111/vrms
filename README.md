@@ -11,8 +11,7 @@ This guide will walk you through exactly how to set up and run this project on y
 Before you start, make sure you have the following installed on your system:
 1. **Java Development Kit (JDK 17 or higher)**
 2. **Node.js & npm** (v18+ recommended)
-3. **Angular CLI** (`npm install -g @angular/cli`)
-4. **MySQL Server & MySQL Workbench**
+3. **MySQL Server & MySQL Workbench**
 
 ---
 
@@ -61,7 +60,7 @@ You can run the backend either through your IDE (like IntelliJ/VS Code) or the t
    ```
 3. Start the Angular development server:
    ```bash
-   ng serve
+   npm start
    ```
 
 *The frontend server will start on `http://localhost:4200`.*
