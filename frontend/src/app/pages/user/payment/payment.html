@@ -1,0 +1,92 @@
+<app-navbar></app-navbar>
+
+<div class="dashboard-layout">
+  <div class="dashboard-content">
+    <div class="page-header flex justify-between items-center">
+      <div>
+        <h1>Payment Status</h1>
+        <p>Booking ID: <span class="font-mono text-primary">{{ bookingId }}</span></p>
+      </div>
+      <a routerLink="/user/history" class="btn btn-outline">Back to History</a>
+    </div>
+
+    @if (error) {
+      <div class="alert alert-error">{{ error }}</div>
+    }
+
+    @if (payment) {
+      <div class="card payment-card mt-8 mx-auto">
+        
+        @if (payment.status === 'PENDING') {
+          <h2>Make a Payment</h2>
+          <p class="mt-2 text-muted">Amount Due: <strong>₹{{ payment.amount }}</strong></p>
+
+          <form class="mt-6" (ngSubmit)="processPayment()">
+            <div class="form-group mb-4">
+              <label>Payment Method</label>
+              <select name="paymentMethod" [(ngModel)]="paymentMethod" class="input-field w-full mt-1">
+                <option value="upi">UPI / Mobile Transfer</option>
+                <option value="card">Credit / Debit Card</option>
+              </select>
+            </div>
+
+            @if (paymentMethod === 'upi') {
+              <div class="form-group mb-4 text-center">
+                <p class="mb-3 text-muted">Click below to pay the Owner directly via your UPI App. Once clicked, we will verify and process your booking.</p>
+                <a [href]="'upi://pay?pa=' + adminContact + '@upi&pn=Vehicle%20Owner&am=' + payment.amount + '&cu=INR'" 
+                   class="btn btn-primary" style="display: inline-block; width: 100%;"
+                   (click)="processPayment()">
+                  Pay via UPI App (₹{{ payment.amount }})
+                </a>
+              </div>
+            } @else {
+              <div class="form-group mb-4">
+                <label>Card Number</label>
+                <input name="cardNumber" type="text" [(ngModel)]="cardNumber" placeholder="XXXX-XXXX-XXXX-XXXX" required class="input-field w-full mt-1" style="box-sizing: border-box;">
+              </div>
+              <div style="display: flex; gap: 1rem; margin-bottom: 1rem; width: 100%; box-sizing: border-box;">
+                <div style="width: calc(50% - 0.5rem); box-sizing: border-box;">
+                  <label>Expiry Date</label>
+                  <input name="cardExpiry" type="text" [(ngModel)]="cardExpiry" placeholder="MM/YY" required class="input-field" style="width: 100%; box-sizing: border-box; margin-top: 0.25rem;">
+                </div>
+                <div style="width: calc(50% - 0.5rem); box-sizing: border-box;">
+                  <label>CVV</label>
+                  <input name="cardCvv" type="password" [(ngModel)]="cardCvv" placeholder="***" required class="input-field" style="width: 100%; box-sizing: border-box; margin-top: 0.25rem;">
+                </div>
+              </div>
+            }
+
+            @if (paymentMethod === 'card') {
+              <button type="submit" class="btn btn-primary w-full mt-4" [disabled]="loading" style="box-sizing: border-box;">
+                {{ loading ? 'Processing...' : 'Pay ₹' + payment.amount + ' Now' }}
+              </button>
+            }
+          </form>
+        }
+        
+        @if (payment.status === 'SUCCESS') {
+          <div class="status-icon success-icon">✅</div>
+          <h2>Payment Successful!</h2>
+          <p class="mt-4">Your payment of <strong>₹{{ payment.amount }}</strong> has been approved.</p>
+          
+          <div class="transaction-box mt-6">
+            <span class="text-muted">Transaction ID:</span>
+            <div class="txn-id mt-2">{{ payment.transactionId }}</div>
+          </div>
+          
+          <a routerLink="/user/history" class="btn btn-primary mt-8">Return to Dashboard</a>
+        }
+        
+        @if (payment.status === 'REJECTED') {
+          <div class="status-icon danger-icon">❌</div>
+          <h2>Payment Rejected</h2>
+          <p class="mt-4">Your payment of <strong>₹{{ payment.amount }}</strong> was rejected by the admin.</p>
+          <p class="text-muted mt-2">Please contact support for assistance.</p>
+        }
+        
+      </div>
+    } @else if (loading) {
+      <div class="text-center mt-8">Loading payment status...</div>
+    }
+  </div>
+</div>

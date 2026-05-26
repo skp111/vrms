@@ -1,0 +1,8 @@
+.font-mono {
+  font-family: monospace;
+  color: var(--primary);
+}
+
+.text-sm {
+  font-size: 0.875rem;
+}

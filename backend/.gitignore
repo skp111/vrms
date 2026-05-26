@@ -1,0 +1,27 @@
+# =========================
+# BACKEND (Spring Boot)
+# =========================
+target/
+!.mvn/wrapper/maven-wrapper.jar
+log/
+logs/
+*.log
+
+# Ignore Standalone Tomcat (Not needed on GitHub)
+apache-tomcat-*/
+apache-tomcat-7.0.109/
+
+### IntelliJ IDEA ###
+.idea/
+*.iws
+*.iml
+*.ipr
+
+### VS Code ###
+.vscode/
+.history/
+*.code-workspace
+
+### OS Files ###
+.DS_Store
+Thumbs.db

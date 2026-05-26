@@ -1,0 +1,30 @@
+<nav class="navbar">
+  <div class="nav-brand">
+    <a routerLink="/" class="brand-logo">
+      <span class="icon">🚗</span> RentalSphere
+    </a>
+  </div>
+  
+  <ul class="nav-links">
+    @if (authService.isLoggedIn()) {
+      @if (authService.userRole()?.toUpperCase() === 'ADMIN') {
+        <li><a routerLink="/admin/home" routerLinkActive="active">Dashboard</a></li>
+        <li><a routerLink="/admin/vehicles" routerLinkActive="active">Vehicles</a></li>
+        <li><a routerLink="/admin/bookings" routerLinkActive="active">Bookings</a></li>
+        <li><a routerLink="/profile" routerLinkActive="active">Profile</a></li>
+      } @else {
+        <li><a routerLink="/user/home" routerLinkActive="active">Dashboard</a></li>
+        <li><a routerLink="/user/vehicles" routerLinkActive="active">Vehicles</a></li>
+        <li><a routerLink="/user/history" routerLinkActive="active">History</a></li>
+        <li><a routerLink="/profile" routerLinkActive="active">Profile</a></li>
+      }
+      <li class="user-profile">
+        <span class="user-email">{{ authService.currentUser()?.email }}</span>
+        <button class="btn btn-outline btn-sm logout-btn" (click)="logout()">Logout</button>
+      </li>
+    } @else {
+      <li><a routerLink="/login" class="nav-link">Login</a></li>
+      <li><a routerLink="/register" class="btn btn-primary btn-sm">Register</a></li>
+    }
+  </ul>
+</nav>

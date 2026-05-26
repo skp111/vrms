@@ -1,0 +1,84 @@
+<app-navbar></app-navbar>
+
+<div class="dashboard-layout">
+  <div class="dashboard-content">
+    <div class="page-header">
+      <h1>All Bookings</h1>
+      <p>View all vehicle reservations and manage their billing.</p>
+    </div>
+
+    <div class="table-container mt-8">
+      @if (loading) {
+        <div class="p-8 text-center">Loading bookings...</div>
+      } @else if (error) {
+        <div class="alert alert-error">{{ error }}</div>
+      } @else {
+        <table>
+          <thead>
+            <tr>
+              <th>Booking ID</th>
+              <th>User Details</th>
+              <th>Vehicle Details</th>
+              <th>Dates</th>
+              <th>Status</th>
+              <th>Bill Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (booking of bookings; track booking.bookingId) {
+              <tr>
+                <td class="font-mono">{{ booking.bookingId }}</td>
+                <td>
+                  <div style="font-weight: 500">{{ booking.userName }}</div>
+                  <div class="text-muted" style="font-size: 0.85em">{{ booking.userMobile }}</div>
+                </td>
+                <td>
+                  <div>{{ booking.vehicleDetails }}</div>
+                </td>
+                <td>{{ booking.startDate }} to {{ booking.endDate }}</td>
+                <td>
+                  <span class="status" [class.success]="booking.status === 'COMPLETED'" [class.pending]="booking.status === 'CREATED'">
+                    {{ booking.status }}
+                  </span>
+                </td>
+                <td>
+                  @if (booking.status === 'REJECTED') {
+                    <span class="status" style="background: rgba(255,255,255,0.1); color: #ccc;">
+                      No Bill
+                    </span>
+                  } @else {
+                    <span class="status" [class.success]="booking.billStatus === 'GENERATED'" [class.pending]="booking.billStatus === 'PENDING'">
+                      {{ booking.billStatus }}
+                    </span>
+                  }
+                </td>
+                <td>
+                  <div class="flex gap-2">
+                    @if (booking.status === 'CREATED') {
+                      <button (click)="approveBooking(booking.bookingId)" class="btn btn-primary btn-sm">Approve Booking</button>
+                      <button (click)="rejectBooking(booking.bookingId)" class="btn btn-outline btn-sm" style="color: red; border-color: red;">Reject</button>
+                    } @else if (booking.billStatus === 'PENDING' && booking.status === 'APPROVED') {
+                      <a [routerLink]="['/admin/bill', booking.bookingId]" class="btn btn-outline btn-sm">Generate Bill</a>
+                    } @else if (booking.status === 'COMPLETED') {
+                      <span class="text-success font-bold">Paid</span>
+                    } @else if (booking.status === 'REJECTED') {
+                      <span class="text-danger font-bold">Rejected</span>
+                    } @else {
+                      <span class="text-muted">Awaiting Payment</span>
+                    }
+                  </div>
+                </td>
+              </tr>
+            }
+            @if (bookings.length === 0) {
+              <tr>
+                <td colspan="7" class="text-center p-8">No bookings found.</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      }
+    </div>
+  </div>
+</div>

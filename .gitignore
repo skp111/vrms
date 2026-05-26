@@ -1,0 +1,20 @@
+# =========================
+# ROOT FOLDER IGNORES
+# =========================
+
+# Ignore any IDE settings opened at the root level
+.vscode/
+.idea/
+*.code-workspace
+
+# Ignore Python environments (like the venv folder you saw earlier)
+venv/
+env/
+.env
+
+# Ignore OS-generated junk files
+.DS_Store
+Thumbs.db
+
+# Note: The backend/ and frontend/ folders have their own .gitignore files
+# which handle their specific code (like node_modules and target).

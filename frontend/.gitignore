@@ -1,0 +1,29 @@
+# =========================
+# FRONTEND (Angular / Node)
+# =========================
+
+# Dependencies
+node_modules/
+
+# Build Output
+dist/
+out-tsc/
+bazel-out/
+
+# Angular Cache
+.angular/
+
+# Logs and Debugging
+npm-debug.log
+yarn-error.log
+*.log
+
+# Environment variables
+.env
+
+# VS Code settings
+.vscode/
+
+# OS Files
+.DS_Store
+Thumbs.db

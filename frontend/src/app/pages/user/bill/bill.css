@@ -1,0 +1,53 @@
+.bill-container {
+  max-width: 600px;
+  background: var(--bg-card);
+}
+
+.bill-header {
+  text-align: center;
+  border-bottom: 1px dashed var(--border-color);
+  padding-bottom: 1.5rem;
+}
+
+.bill-id {
+  color: var(--text-muted);
+  font-family: monospace;
+  margin-top: 0.5rem;
+}
+
+.charge-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 0;
+  font-size: 1.1rem;
+}
+
+.charge-label {
+  color: var(--text-muted);
+}
+
+.charge-value {
+  font-weight: 500;
+  font-family: monospace;
+  font-size: 1.25rem;
+}
+
+.divider {
+  height: 1px;
+  background: var(--border-color);
+  margin: 1rem 0;
+}
+
+.final-total {
+  font-size: 1.5rem;
+  font-weight: 700;
+  background: rgba(16, 185, 129, 0.05);
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-top: 1rem;
+}
+
+.text-danger { color: #f87171; }
+.text-success { color: var(--success); }
+.font-mono { font-family: monospace; }
+.full-width { width: 100%; justify-content: center; }

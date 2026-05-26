@@ -1,0 +1,80 @@
+<app-navbar></app-navbar>
+
+<div class="dashboard-layout">
+  <div class="dashboard-content">
+    <div class="page-header flex justify-between items-center">
+      <div>
+        <h1>Complete Booking</h1>
+        <p>Confirm your dates and finalize your reservation.</p>
+      </div>
+      <a routerLink="/user/vehicles" class="btn btn-outline">Cancel</a>
+    </div>
+
+    @if (error) {
+      <div class="alert alert-error">{{ error }}</div>
+    }
+
+    @if (vehicle) {
+      <div class="grid-2 mt-8">
+        <!-- Vehicle Summary -->
+        <div class="card booking-summary">
+          <h3>Vehicle Selected</h3>
+          <div class="summary-details mt-4">
+            <div class="flex justify-between mb-2">
+              <span class="text-muted">Type</span>
+              <strong>{{ vehicle.type }}</strong>
+            </div>
+            <div class="flex justify-between mb-2">
+              <span class="text-muted">Brand & Model</span>
+              <strong>{{ vehicle.brand }} {{ vehicle.model }}</strong>
+            </div>
+            <div class="flex justify-between mb-2">
+              <span class="text-muted">Registration</span>
+              <strong>{{ vehicle.registrationNumber }}</strong>
+            </div>
+            <div class="flex justify-between pt-4 mt-4 border-t">
+              <span class="text-muted">Rate</span>
+              <strong class="text-primary">₹{{ vehicle.pricePerDay }} / day</strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- Booking Form -->
+        <div class="card">
+          <h3>Select Dates</h3>
+          <form (ngSubmit)="onSubmit()" class="mt-4">
+            <div class="grid-2 mb-4">
+              <div class="form-group">
+                <label>Start Date</label>
+                <input type="date" name="startDate" [(ngModel)]="startDate" [min]="today" required>
+              </div>
+              <div class="form-group">
+                <label>End Date</label>
+                <input type="date" name="endDate" [(ngModel)]="endDate" [min]="startDate || today" required>
+              </div>
+            </div>
+
+            @if (calculateTotal() > 0) {
+              <div class="total-box mb-4">
+                <span>Estimated Total:</span>
+                <span class="total-amount">₹{{ calculateTotal() }}</span>
+              </div>
+            }
+
+            <button type="submit" class="btn btn-primary btn-lg mt-2" [disabled]="loading || calculateTotal() <= 0">
+              @if (loading) {
+                <span>Processing...</span>
+              } @else {
+                <span>Confirm Booking</span>
+              }
+            </button>
+          </form>
+        </div>
+      </div>
+    } @else {
+      <div class="text-center mt-8">
+        <p>Loading vehicle details...</p>
+      </div>
+    }
+  </div>
+</div>

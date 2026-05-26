@@ -1,0 +1,85 @@
+<app-navbar></app-navbar>
+
+<div class="dashboard-layout">
+  <div class="dashboard-content">
+    <div class="page-header">
+      <h1>My Bookings</h1>
+      <p>Track your current and past vehicle reservations.</p>
+    </div>
+
+    @if (loading) {
+      <div class="text-center mt-8">Loading history...</div>
+    }
+
+    @if (error) {
+      <div class="alert alert-error">{{ error }}</div>
+    }
+
+    @if (!loading && bookings.length === 0) {
+      <div class="card text-center mt-8">
+        <p>You haven't made any bookings yet.</p>
+        <a routerLink="/user/vehicles" class="btn btn-primary mt-4">Browse Vehicles</a>
+      </div>
+    }
+
+    @if (bookings.length > 0) {
+      <div class="table-container mt-8">
+        <table>
+          <thead>
+            <tr>
+              <th>Booking ID</th>
+              <th>Vehicle Info</th>
+              <th>Dates</th>
+              <th>Status</th>
+              <th>Bill Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (booking of bookings; track booking.bookingId) {
+              <tr>
+                <td class="font-mono">{{ booking.bookingId }}</td>
+                <td>{{ booking.vehicleDetails }}</td>
+                <td>{{ booking.startDate }} to {{ booking.endDate }}</td>
+                <td>
+                  <span class="status" [class.success]="booking.status === 'COMPLETED'" [class.pending]="booking.status === 'CREATED'">
+                    {{ booking.status }}
+                  </span>
+                </td>
+                <td>
+                  @if (booking.status === 'REJECTED') {
+                    <span class="status" style="background: rgba(255,255,255,0.1); color: #ccc;">
+                      No Bill
+                    </span>
+                  } @else {
+                    <span class="status" [class.success]="booking.billStatus === 'GENERATED'" [class.pending]="booking.billStatus === 'PENDING'">
+                      {{ booking.billStatus }}
+                    </span>
+                  }
+                </td>
+                <td>
+                  @if (booking.status === 'APPROVED' && booking.billStatus === 'GENERATED') {
+                    <a [routerLink]="['/user/payment', booking.bookingId]" class="btn btn-primary btn-sm" style="display: block; margin-bottom: 0.5rem;">Pay Now</a>
+                  } @else if (booking.status === 'APPROVED') {
+                    <span class="text-muted text-sm" style="display: block; margin-bottom: 0.5rem;">Waiting for Admin to generate bill</span>
+                  } @else if (booking.status === 'COMPLETED') {
+                    <span class="text-success font-bold" style="display: block; margin-bottom: 0.5rem;">Payment Successful</span>
+                  } @else if (booking.status === 'REJECTED') {
+                    <span class="text-danger font-bold" style="display: block; margin-bottom: 0.5rem;">Booking Rejected</span>
+                  } @else if (booking.billStatus === 'GENERATED') {
+                    <a [routerLink]="['/user/bill', booking.bookingId]" class="btn btn-outline btn-sm" style="display: block; margin-bottom: 0.5rem;">View Bill</a>
+                  } @else {
+                    <span class="text-muted text-sm" style="display: block; margin-bottom: 0.5rem;">Waiting for approval</span>
+                  }
+                  @if (booking.status === 'CREATED' && isCancellable(booking.startDate)) {
+                    <button class="btn btn-outline btn-sm" style="color: red; border-color: red;" (click)="cancelBooking(booking.bookingId)">Cancel</button>
+                  }
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  </div>
+</div>

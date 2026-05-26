@@ -1,0 +1,33 @@
+<app-navbar></app-navbar>
+
+<div class="dashboard-layout">
+  <div class="dashboard-content">
+    <div class="page-header">
+      <h1>Admin Dashboard</h1>
+      <p>Manage fleet, bookings, and payments.</p>
+    </div>
+
+    <div class="grid-3 mt-8">
+      <div class="card dashboard-card">
+        <div class="card-icon text-primary">🚙</div>
+        <h3>Manage Vehicles</h3>
+        <p>Add new vehicles, update prices, and manage availability.</p>
+        <a routerLink="/admin/vehicles" class="btn btn-outline mt-4">Manage Fleet</a>
+      </div>
+
+      <div class="card dashboard-card">
+        <div class="card-icon text-accent">📋</div>
+        <h3>Manage Bookings</h3>
+        <p>View all bookings across the platform and update their statuses.</p>
+        <a routerLink="/admin/bookings" class="btn btn-outline mt-4">View Bookings</a>
+      </div>
+      
+      <div class="card dashboard-card">
+        <div class="card-icon text-success">💰</div>
+        <h3>Payments & Billing</h3>
+        <p>View all generated bills across your vehicles.</p>
+        <a routerLink="/admin/bills" class="btn btn-outline mt-4">View Bills</a>
+      </div>
+    </div>
+  </div>
+</div>

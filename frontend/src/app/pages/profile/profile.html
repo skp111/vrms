@@ -1,0 +1,60 @@
+<app-navbar></app-navbar>
+
+<div class="page-container">
+  <div class="page-header">
+    <h1>My Profile</h1>
+    <p>Manage your account details</p>
+  </div>
+
+  @if (loading) {
+    <div class="loading-state">
+      <div class="spinner"></div>
+      <p>Loading profile...</p>
+    </div>
+  }
+
+  @if (error) {
+    <div class="alert alert-error">
+      {{ error }}
+    </div>
+  }
+
+  @if (!loading && user) {
+    <div class="profile-card">
+      <div class="profile-header">
+        <div class="profile-avatar">
+          {{ user.fullName.charAt(0).toUpperCase() }}
+        </div>
+        <div class="profile-title">
+          <h2>{{ user.fullName }}</h2>
+          <span class="badge" [class.badge-primary]="user.role === 'ADMIN'" [class.badge-secondary]="user.role === 'USER'">
+            {{ user.role }}
+          </span>
+        </div>
+      </div>
+      
+      <div class="profile-details">
+        <div class="detail-group">
+          <label>Email Address</label>
+          <p>{{ user.email }}</p>
+        </div>
+        
+        <div class="detail-group">
+          <label>Mobile Number</label>
+          <p>{{ user.mobile || 'Not provided' }}</p>
+        </div>
+        
+        <div class="detail-group">
+          <label>Address</label>
+          <p>{{ user.address || 'Not provided' }}</p>
+        </div>
+        
+        <div class="detail-group">
+          <label>Driving License</label>
+          <p>{{ user.licenseNumber || 'Not provided' }}</p>
+        </div>
+
+      </div>
+    </div>
+  }
+</div>

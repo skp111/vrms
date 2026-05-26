@@ -1,0 +1,57 @@
+<app-navbar></app-navbar>
+
+<div class="dashboard-layout">
+  <div class="dashboard-content">
+    
+    <div class="page-header" style="display: flex; justify-content: space-between; align-items: center;">
+      <div>
+        <h1>Generated Bills</h1>
+        <p>Review all generated bills across your fleet.</p>
+      </div>
+      <a routerLink="/admin/home" class="btn btn-outline">Back to Dashboard</a>
+    </div>
+
+    <div *ngIf="error" class="alert alert-danger mt-4">{{ error }}</div>
+
+    <div *ngIf="loading" class="text-center mt-8">
+      <div class="spinner"></div>
+      <p class="mt-4 text-secondary">Loading bills...</p>
+    </div>
+
+    <div *ngIf="!loading && !error" class="mt-8">
+      <div *ngIf="bills.length === 0" class="text-center py-8 card dashboard-card">
+        <h3 class="text-secondary">No Bills Found</h3>
+        <p>You haven't generated any bills for your vehicles yet.</p>
+      </div>
+
+      <div *ngIf="bills.length > 0" class="grid-2">
+        <div *ngFor="let bill of bills" class="card dashboard-card" style="border-left: 4px solid var(--accent); display: flex; flex-direction: column;">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
+            <div>
+              <h3 style="margin-bottom: 0.25rem;">Booking: {{ bill.bookingId }}</h3>
+              <span class="badge" [ngStyle]="{'background': bill.paymentStatus === 'COMPLETED' ? 'rgba(40,167,69,0.1)' : 'rgba(255,193,7,0.1)', 'color': bill.paymentStatus === 'COMPLETED' ? 'var(--success)' : 'var(--warning)', 'margin-left': '0.5rem'}">
+                Payment: {{ bill.paymentStatus | titlecase }}
+              </span>
+            </div>
+            <div class="text-right">
+              <h2 class="text-success" style="margin: 0;">₹{{ bill.finalAmount }}</h2>
+              <small class="text-secondary">Total Amount</small>
+            </div>
+          </div>
+          
+          <div style="margin-bottom: 1rem; padding: 0.75rem; background: var(--bg); border-radius: 8px; border-left: 3px solid var(--text-secondary);">
+            <div style="margin-bottom: 0.5rem;">
+              <strong>User:</strong> {{ bill.userName }} <br/>
+              <small class="text-secondary">📞 {{ bill.userMobile }}</small>
+            </div>
+            <div>
+              <strong>Vehicle:</strong> <br/>
+              <span class="badge" style="background: var(--bg-alt); color: var(--text-primary);">{{ bill.vehicleDetails }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+</div>

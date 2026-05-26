@@ -1,0 +1,58 @@
+<app-navbar></app-navbar>
+
+<div class="dashboard-layout">
+  <div class="dashboard-content">
+    <div class="page-header">
+      <h1>Available Vehicles</h1>
+      <p>Choose from our premium fleet for your next journey.</p>
+    </div>
+
+    @if (loading) {
+      <div class="text-center mt-8">
+        <p>Loading available vehicles...</p>
+      </div>
+    }
+
+    @if (error) {
+      <div class="alert alert-error">
+        {{ error }}
+      </div>
+    }
+
+    @if (!loading && vehicles.length === 0) {
+      <div class="card text-center mt-8 p-8">
+        <h2>No vehicles available</h2>
+        <p class="text-muted mt-2">Check back later or contact support.</p>
+      </div>
+    }
+
+    <div class="grid-3 mt-4">
+      @for (vehicle of vehicles; track vehicle.id) {
+        <div class="card vehicle-card">
+          <div class="vehicle-image">
+            @if (vehicle.type === 'SUV') {
+              <div class="emoji-car">🚙</div>
+            } @else if (vehicle.type === 'Bike') {
+              <div class="emoji-car">🏍️</div>
+            } @else {
+              <div class="emoji-car">🚗</div>
+            }
+          </div>
+          <div class="vehicle-details">
+            <div class="flex justify-between items-center mb-2">
+              <span class="vehicle-type">{{ vehicle.type }}</span>
+              <span class="status available">Available</span>
+            </div>
+            <h3>{{ vehicle.brand }} {{ vehicle.model }}</h3>
+            <p class="registration">{{ vehicle.registrationNumber }}</p>
+            <div class="price-section">
+              <span class="price">₹{{ vehicle.pricePerDay }}</span>
+              <span class="per-day">/ day</span>
+            </div>
+            <button class="btn btn-primary mt-4" (click)="bookVehicle(vehicle.id)">Book Now</button>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</div>

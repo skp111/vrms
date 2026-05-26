@@ -1,0 +1,40 @@
+<app-navbar></app-navbar>
+
+<div class="dashboard-layout">
+  <div class="dashboard-content">
+    <div class="page-header flex justify-between items-center">
+      <div>
+        <h1>Validate Payment</h1>
+        <p>Booking ID: <span class="font-mono text-primary">{{ bookingId }}</span></p>
+      </div>
+      <a routerLink="/admin/bookings" class="btn btn-outline">Back to Bookings</a>
+    </div>
+
+    <div class="card max-w-md mx-auto mt-8 text-center p-8">
+      @if (success) {
+        <div class="alert alert-success">
+          {{ successMessage }} Redirecting...
+        </div>
+      }
+
+      @if (error) {
+        <div class="alert alert-error">{{ error }}</div>
+      }
+
+      @if (!success) {
+        <div class="status-icon pending-icon mb-6 text-6xl">💳</div>
+        <h2 class="mb-2">Review Payment</h2>
+        <p class="text-muted mb-8">Please review the incoming payment for this booking and either approve or reject it.</p>
+        
+        <div class="flex gap-4 justify-center">
+          <button class="btn btn-success" (click)="validate(true)" [disabled]="loading">
+            Approve Payment
+          </button>
+          <button class="btn btn-danger" (click)="validate(false)" [disabled]="loading">
+            Reject Payment
+          </button>
+        </div>
+      }
+    </div>
+  </div>
+</div>

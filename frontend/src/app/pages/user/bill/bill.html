@@ -1,0 +1,53 @@
+<app-navbar></app-navbar>
+
+<div class="dashboard-layout">
+  <div class="dashboard-content">
+    <div class="page-header flex justify-between items-center">
+      <div>
+        <h1>Invoice Details</h1>
+        <p>Review your charges for Booking: <span class="font-mono text-primary">{{ bookingId }}</span></p>
+      </div>
+      <a routerLink="/user/history" class="btn btn-outline">Back to History</a>
+    </div>
+
+    @if (loading) {
+      <div class="text-center mt-8">Loading bill details...</div>
+    }
+
+    @if (error) {
+      <div class="alert alert-error">{{ error }}</div>
+    }
+
+    @if (bill) {
+      <div class="bill-container card mt-8 mx-auto">
+        <div class="bill-header">
+          <h2>Rental Invoice</h2>
+        </div>
+        
+        <div class="bill-body mt-8">
+
+          <div class="divider"></div>
+          
+          <div class="charge-row final-total">
+            <span class="charge-label">Final Amount Due</span>
+            <span class="charge-value text-success">₹{{ bill.finalAmount }}</span>
+          </div>
+        </div>
+
+        <div class="bill-footer mt-8">
+          @if (paymentRequested) {
+            <a [routerLink]="['/user/payment', bookingId]" class="btn btn-primary btn-lg full-width">View Payment Status</a>
+          } @else {
+            <button class="btn btn-primary btn-lg full-width" (click)="proceedToPayment()" [disabled]="requestingPayment">
+              @if (requestingPayment) {
+                <span>Processing...</span>
+              } @else {
+                <span>Proceed to Payment</span>
+              }
+            </button>
+          }
+        </div>
+      </div>
+    }
+  </div>
+</div>

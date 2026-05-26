@@ -1,0 +1,37 @@
+<app-navbar></app-navbar>
+
+<div class="dashboard-layout">
+  <div class="dashboard-content">
+    <div class="page-header">
+      @if (loading) {
+        <h1>Welcome back!</h1>
+      } @else {
+        <h1>Welcome back, {{ user?.fullName }}!</h1>
+      }
+      <p>Here's what's happening with your rentals today.</p>
+    </div>
+
+    <div class="grid-3 mt-8">
+      <div class="card dashboard-card">
+        <div class="card-icon">🚗</div>
+        <h3>Browse Vehicles</h3>
+        <p>Explore our premium fleet and find your perfect ride.</p>
+        <a routerLink="/user/vehicles" class="btn btn-outline mt-4">View Vehicles</a>
+      </div>
+
+      <div class="card dashboard-card">
+        <div class="card-icon">📅</div>
+        <h3>My Bookings</h3>
+        <p>View your past and upcoming vehicle reservations.</p>
+        <a routerLink="/user/history" class="btn btn-outline mt-4">View History</a>
+      </div>
+
+      <div class="card dashboard-card">
+        <div class="card-icon">👤</div>
+        <h3>My Profile</h3>
+        <p>Manage your personal details and driving license.</p>
+        <a routerLink="/profile" class="btn btn-outline mt-4">View Profile</a>
+      </div>
+    </div>
+  </div>
+</div>
