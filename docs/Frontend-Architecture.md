@@ -24,7 +24,7 @@ sequenceDiagram
 ---
 
 ## 2. Frontend Technology Stack
-- **Framework**: Angular 19 (Standalone Components)
+- **Framework**: Angular 21 (Standalone Components)
 - **Language**: TypeScript
 - **Styling**: Vanilla CSS (CSS Variables, Flexbox, CSS Grid)
 - **Routing**: Angular Router
