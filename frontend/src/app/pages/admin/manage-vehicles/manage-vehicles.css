@@ -1,2 +1,10 @@
 .ml-2 { margin-left: 0.5rem; }
 .p-8 { padding: 2rem; }
+
+/* Force cursor pointer on the actual "Choose File" button inside the input */
+input[type="file"]::file-selector-button {
+    cursor: pointer;
+}
+input[type="file"]::-webkit-file-upload-button {
+    cursor: pointer;
+}

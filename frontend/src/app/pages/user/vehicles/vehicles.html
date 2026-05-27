@@ -29,13 +29,17 @@
     <div class="grid-3 mt-4">
       @for (vehicle of vehicles; track vehicle.id) {
         <div class="card vehicle-card">
-          <div class="vehicle-image">
-            @if (vehicle.type === 'SUV') {
-              <div class="emoji-car">🚙</div>
-            } @else if (vehicle.type === 'Bike') {
-              <div class="emoji-car">🏍️</div>
+          <div class="vehicle-image" style="display: flex; align-items: center; justify-content: center; overflow: hidden; background: #f0f0f0;">
+            @if (vehicle.imageBase64) {
+              <img [src]="vehicle.imageBase64" alt="Vehicle Image" style="width: 100%; height: 100%; object-fit: cover;">
             } @else {
-              <div class="emoji-car">🚗</div>
+              @if (vehicle.type === 'SUV') {
+                <div class="emoji-car">🚙</div>
+              } @else if (vehicle.type === 'Bike') {
+                <div class="emoji-car">🏍️</div>
+              } @else {
+                <div class="emoji-car">🚗</div>
+              }
             }
           </div>
           <div class="vehicle-details">

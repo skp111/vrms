@@ -22,6 +22,8 @@ export interface Vehicle {
   model: string;      // Innova, City
   registrationNumber: string;
   pricePerDay: number;
+  description: string;
+  imageBase64?: string;
   available: boolean;
 }
 

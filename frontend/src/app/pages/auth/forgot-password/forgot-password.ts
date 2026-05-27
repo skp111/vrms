@@ -44,19 +44,44 @@ export class ForgotPassword {
     this.error = '';
     this.success = '';
 
-    if (!this.formData.email || !this.formData.mobile || !this.formData.newPassword || !this.formData.confirmPassword) {
-      this.error = 'All fields are mandatory';
+    this.formData.email = this.formData.email.trim();
+    if (!this.formData.email) {
+      this.error = 'Write your email address';
+      return;
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(this.formData.email)) {
+      this.error = 'Enter a valid email';
       return;
     }
 
-    if (this.formData.newPassword !== this.formData.confirmPassword) {
-      this.error = 'Passwords do not match';
+    this.formData.mobile = this.formData.mobile.trim();
+    if (!this.formData.mobile) {
+      this.error = 'Write your mobile number';
+      return;
+    }
+    const mobileRegex = /^\d{10}$/;
+    if (!mobileRegex.test(this.formData.mobile)) {
+      this.error = 'Mobile number must be exactly 10 digits.';
       return;
     }
 
+    if (!this.formData.newPassword) {
+      this.error = 'Write your password';
+      return;
+    }
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
     if (!passwordRegex.test(this.formData.newPassword)) {
-      this.error = 'Password must be at least 8 characters long, contain one uppercase, one lowercase, one number, and one special character';
+      this.error = 'Password must be at least 8 characters and include uppercase, lowercase, number, and special character.';
+      return;
+    }
+
+    if (!this.formData.confirmPassword) {
+      this.error = 'Write your confirm password';
+      return;
+    }
+    if (this.formData.newPassword !== this.formData.confirmPassword) {
+      this.error = 'Passwords do not match';
       return;
     }
 

@@ -1,12 +1,13 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { Footer } from '../../../shared/components/footer/footer';
 import { AuthService } from '../../../core/services/auth.service';
 import { Navbar } from '../../../shared/components/navbar/navbar';
 import { User } from '../../../models/models';
 
 @Component({
   selector: 'app-user-home',
-  imports: [RouterLink, Navbar],
+  imports: [RouterLink, Navbar, Footer],
   templateUrl: './user-home.html',
   styleUrl: './user-home.css'
 })

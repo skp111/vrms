@@ -106,6 +106,17 @@ export class ManageVehicles implements OnInit {
     return err.error?.message || err.error || err.message || defaultMsg;
   }
 
+  onFileSelected(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.formData.imageBase64 = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
   submitForm() {
     this.error = '';
 

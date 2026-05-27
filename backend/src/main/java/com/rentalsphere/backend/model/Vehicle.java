@@ -38,6 +38,12 @@ public class Vehicle {
     // ✅ Rental price per day
     private double pricePerDay;
 
+    private String description;
+
+    @Lob
+    @Column(columnDefinition = "LONGTEXT")
+    private String imageBase64;
+
     // ✅ Availability status (true = available)
     private boolean available;
 }
